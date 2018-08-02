@@ -1,0 +1,15 @@
+---
+# Configure sshd to trust the Teleport CA
+
+- name: Exporting Teleport certs
+  hosts: teleport_auth_server
+  become: true
+  roles:
+    - export_teleport_certs
+
+- name: Integrating OpenSSH Servers with Teleport
+  hosts: ssh_servers
+  become: true
+  roles:
+    - import_teleport_certs
+

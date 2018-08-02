@@ -1,0 +1,8 @@
+---
+- name: Export the Teleport CA certificate
+  shell: "sudo /usr/local/bin/tctl auth export --type=user > {{ playbook-dir }}/roles/import_teleport_certs/filesteleport-user-ca.pub"
+  
+- name: Allow access for all users
+  shell: "sudo sed -e s/cert-authority\ //g -i {{ playbook-dir }}/roles/import_teleport_certs/filesteleport-user-ca.pub"
+  
+

@@ -1,0 +1,3 @@
+---
+- name: Import Tasks
+  include_tasks: import_certificate.yml

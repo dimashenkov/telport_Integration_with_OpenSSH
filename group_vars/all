@@ -1,0 +1,4 @@
+---
+# Variables here apply to all host groups
+ansible_ssh_user: notroot
+domain_name: ol7.yum.tktm.io
