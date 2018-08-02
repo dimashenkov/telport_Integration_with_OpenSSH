@@ -1,6 +1,8 @@
-[ssh_servers]
-
 [teleport_auth_server]
 localhost
+
+[ssh_servers]
+
+
 
 [ssh_servers:vars]
