@@ -1,3 +1,30 @@
 ---
+- name: Register Local hostname
+  local_action: command hostname
+  register: local_hostname 
+  
+- name: Curl check auth server 
+  shell: "curl -s -X GET http://qa1.pim.nonprod-tmaws.io/tkm/v1/asset?keyword={{ local_hostname.stdout }} | jq -r .items[].doc.Site"
+  register: curl_auth_server
+
+- name: Curl check ssh server
+  shell: "curl -s -X GET http://qa1.pim.nonprod-tmaws.io/tkm/v1/asset?keyword={{ inventory_hostname }} | jq -r .items[].doc.Site"
+  register: curl_ssh_server
+
+- name: Print SSH srever HOSTNAME
+  debug:
+    msg: "SSH srever HOSTNAME is: {{ inventory_hostname }}"
+    
+- name: Print AUTH srever HOSTNAME
+  debug:
+    msg: "AUTH srever HOSTNAME is: {{ local_hostname.stdout }}"    
+
 - name: Import Tasks
   include_tasks: import_certificate.yml
+  when: 
+  - ansible_distribution == 'OracleLinux' and ansible_distribution_version == '7.5'
+  - curl_auth_server == curl_ssh_server
+
+- name: Print debug info
+  debug:
+    msg: "SSH srever zone is: {{ curl_ssh_server.stdout }}, AUTH srever zone is: {{ curl_auth_server.stdout }}"
