@@ -3,6 +3,10 @@
   local_action: command hostname
   register: local_hostname 
   
+- name: Print AUTH srever HOSTNAME
+  debug:
+    msg: "AUTH srever HOSTNAME is: {{ local_hostname.stdout }}"
+
 - name: Curl check auth server 
   shell: "curl -s -X GET http://qa1.pim.nonprod-tmaws.io/tkm/v1/asset?keyword={{ local_hostname.stdout }} | jq -r .items[].doc.Site"
   register: curl_auth_server
@@ -14,10 +18,6 @@
 - name: Print SSH srever HOSTNAME
   debug:
     msg: "SSH srever HOSTNAME is: {{ inventory_hostname }}"
-    
-- name: Print AUTH srever HOSTNAME
-  debug:
-    msg: "AUTH srever HOSTNAME is: {{ local_hostname.stdout }}"    
 
 - name: Import Tasks
   include_tasks: import_certificate.yml
