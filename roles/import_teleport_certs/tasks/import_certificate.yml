@@ -1,10 +1,11 @@
 ---
 - name: Service sshd conf
-  shell: "echo 'TrustedUserCAKeys /etc/ssh/teleport-user-ca.pub' >> /etc/ssh/sshd_config"
+  shell: "[ \"`grep -c 'TrustedUserCAKeys /etc/ssh/teleport-user-ca.pub' /etc/ssh/sshd_config`\" == \"0\" ] && echo 'TrustedUserCAKeys /etc/ssh/teleport-user-ca.pub' >> /etc/ssh/sshd_config;"
+  ignore_errors: yes 
 
 - name: Copy Trusted User CA Keys
   copy:
-    src: "{{ role_path }}/files/teleport-user-ca.pub"
+    src: /tmp/teleport-user-ca.pub
     dest: /etc/ssh/teleport-user-ca.pub
     owner: root
     group: root
