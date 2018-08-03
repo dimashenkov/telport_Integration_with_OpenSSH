@@ -1,8 +1,5 @@
 [teleport_auth_server]
-localhost
-
+127.0.0.1 ansible_connection=local
 [ssh_servers]
-
-
-
+mitko9.sys.jetdev1.syseng.tmcs
 [ssh_servers:vars]
