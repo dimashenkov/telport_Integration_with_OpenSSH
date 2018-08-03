@@ -1,5 +1,8 @@
 [teleport_auth_server]
-127.0.0.1 ansible_connection=local
+localhost
+
 [ssh_servers]
-10.73.100.109
+
+
+
 [ssh_servers:vars]
